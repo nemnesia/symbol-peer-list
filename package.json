@@ -1,0 +1,50 @@
+{
+  "name": "symbol-peers-list",
+  "description": "Symbolブロックチェーンのmainnet/testnetピアリストWeb API",
+  "version": "1.0.0",
+  "author": "nemnesia",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "symbol",
+    "blockchain",
+    "api",
+    "peers",
+    "node",
+    "typescript",
+    "express"
+  ],
+  "packageManager": "yarn@4.9.2",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "yarn tsx watch src/index.ts",
+    "lint": "eslint {src,apps,libs,test}/**/*.ts",
+    "lint:fix": "eslint {src,apps,libs,test}/**/*.ts --fix",
+    "format": "prettier --check src/**/*.ts",
+    "format:fix": "prettier --write src/**/*.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5",
+    "@types/node": "^24.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "volta": {
+    "node": "22.17.1",
+    "npm": "11.5.1",
+    "yarn": "4.9.2"
+  }
+}
