@@ -13,26 +13,30 @@ export async function fetchSymbolNodes(
 
 // 取得したjsonをSymbolPeerList型に編集して返す
 export function toSymbolPeerList(raw: any): SymbolPeerList {
-  const knownPeers: SymbolPeer[] = Array.isArray(raw) ? raw
-    .filter(peer => {
-      const rolesVal = peer.roles || 0
-      return (rolesVal & 1) && (rolesVal & 2)
-    })
-    .map(peer => ({
-      publicKey: peer.publicKey,
-      endpoint: {
-        host: peer.host,
-        port: peer.port,
-      },
-      metadata: {
-        name: peer.friendlyName || '',
-        roles: [
-          (peer.roles & 1) ? 'Peer' : '',
-          (peer.roles & 2) ? 'Api' : '',
-          (peer.roles & 4) ? 'Voting' : ''
-        ].filter(Boolean).join(', ')
-      },
-    })) : []
+  const knownPeers: SymbolPeer[] = Array.isArray(raw)
+    ? raw
+        .filter((peer) => {
+          const rolesVal = peer.roles || 0
+          return rolesVal & 1 && rolesVal & 2
+        })
+        .map((peer) => ({
+          publicKey: peer.publicKey,
+          endpoint: {
+            host: peer.host,
+            port: peer.port,
+          },
+          metadata: {
+            name: peer.friendlyName || '',
+            roles: [
+              peer.roles & 1 ? 'Peer' : '',
+              peer.roles & 2 ? 'Api' : '',
+              peer.roles & 4 ? 'Voting' : '',
+            ]
+              .filter(Boolean)
+              .join(', '),
+          },
+        }))
+    : []
   return {
     _info: 'this file contains a list of peers',
     _create_tool: 'symbol-peers-p2p',
