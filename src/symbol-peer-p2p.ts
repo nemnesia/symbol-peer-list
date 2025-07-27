@@ -1,7 +1,9 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import { fetchSymbolNodes, toSymbolPeerList } from './peerList.js'
 import 'dotenv/config'
 
+dotenv.config()
 const app = express()
 const port = process.env.SYMBOL_PEERS_LIST_PORT || process.env.PORT || 3000
 

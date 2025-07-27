@@ -22,4 +22,4 @@ jobs:
             export PATH="$VOLTA_HOME/bin:$PATH"
             cd /home/webs/web_service/symbol-peer-p2p
             git pull origin main
-            yarn install && yarn build && yarn restart
+            yarn install && yarn build && yarn stop; nohup yarn start > /dev/null 2>&1 &
