@@ -16,4 +16,8 @@ node_modules
 #!.yarn/cache
 .pnp.*
 
+# env files
+.env*.local
+.env
+
 dist
