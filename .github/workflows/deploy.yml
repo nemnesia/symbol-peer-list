@@ -18,6 +18,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            export VOLTA_HOME="$HOME/.volta"
+            export PATH="$VOLTA_HOME/bin:$PATH"
             cd /home/webs/web_service/symbol-peer-p2p
             git pull origin main
             yarn install && yarn build && yarn restart
