@@ -21,8 +21,8 @@
   "type": "module",
   "scripts": {
     "build": "shx rm -rf dist && tsc",
-    "start": "node --require dotenv/config dist/symbol-peer-p2p.js",
-    "stop": "pkill -f symbol-peer-p2p.js",
+    "start": "node --require dotenv/config dist/symbol-peers-p2p.js",
+    "stop": "pkill -f symbol-peers-p2p.js",
     "dev": "yarn tsx watch src/index.ts",
     "lint": "eslint {src,apps,libs,test}/**/*.ts",
     "lint:fix": "eslint {src,apps,libs,test}/**/*.ts --fix",

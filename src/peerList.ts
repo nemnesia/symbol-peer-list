@@ -7,21 +7,18 @@ export async function fetchSymbolNodes(
 ): Promise<any> {
   const url = `https://${hostname}/nodes?filter=suggested&limit=${limit}`
   const res = await fetch(url)
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`)
-  }
-  const data = await res.json()
-  return data
+  if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+  return await res.json()
 }
 
 // 取得したjsonをSymbolPeerList型に編集して返す
 export function toSymbolPeerList(raw: any): SymbolPeerList {
-  const knownPeers: SymbolPeer[] = (raw || [])
-    .filter((peer: any) => {
+  const knownPeers: SymbolPeer[] = Array.isArray(raw) ? raw
+    .filter(peer => {
       const rolesVal = peer.roles || 0
-      return rolesVal & 1 && rolesVal & 2
+      return (rolesVal & 1) && (rolesVal & 2)
     })
-    .map((peer: any) => ({
+    .map(peer => ({
       publicKey: peer.publicKey,
       endpoint: {
         host: peer.host,
@@ -29,16 +26,13 @@ export function toSymbolPeerList(raw: any): SymbolPeerList {
       },
       metadata: {
         name: peer.friendlyName || '',
-        roles: (() => {
-          const rolesArr = []
-          const rolesVal = peer.roles || 0
-          if (rolesVal & 1) rolesArr.push('Peer')
-          if (rolesVal & 2) rolesArr.push('Api')
-          if (rolesVal & 4) rolesArr.push('Voting')
-          return rolesArr.join(', ')
-        })(),
+        roles: [
+          (peer.roles & 1) ? 'Peer' : '',
+          (peer.roles & 2) ? 'Api' : '',
+          (peer.roles & 4) ? 'Voting' : ''
+        ].filter(Boolean).join(', ')
       },
-    }))
+    })) : []
   return {
     _info: 'this file contains a list of peers',
     knownPeers,
