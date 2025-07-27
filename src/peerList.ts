@@ -1,4 +1,4 @@
-import { SymbolPeerList, SymbolPeer } from './SymbolPeerList.js'
+import { SymbolPeer, SymbolPeerList } from './SymbolPeerList.js'
 
 // 指定URLからJSONデータを取得する関数
 export async function fetchSymbolNodes(

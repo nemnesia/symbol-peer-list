@@ -1,7 +1,7 @@
-import express from 'express'
 import dotenv from 'dotenv'
-import { fetchSymbolNodes, toSymbolPeerList } from './peerList.js'
 import 'dotenv/config'
+import express from 'express'
+import { fetchSymbolNodes, toSymbolPeerList } from './peerList.js'
 
 dotenv.config()
 const app = express()

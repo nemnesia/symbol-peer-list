@@ -27,8 +27,10 @@ yarn dev
 
 ```
 yarn build
-SYMBOL_PEERS_LIST_PORT=8080 yarn start
+yarn start
 ```
+
+※ ポート番号などの環境変数は`.env`ファイルで管理できます。
 
 ### エンドポイント
 
@@ -36,6 +38,7 @@ SYMBOL_PEERS_LIST_PORT=8080 yarn start
 - `GET /testnet?limit=10` : テストネットのノードリスト取得
 
 #### レスポンス例
+
 ```json
 {
   "_info": "this file contains a list of peers",
@@ -56,7 +59,14 @@ SYMBOL_PEERS_LIST_PORT=8080 yarn start
 
 ## 環境変数
 
+- `.env`ファイルで設定できます（例: `.env.sample` を参照）。
 - `SYMBOL_PEERS_LIST_PORT` : サーバーのポート番号（デフォルト: 3000）
+
+例: `.env`
+
+```env
+SYMBOL_PEERS_LIST_PORT=8080
+```
 
 ## ライセンス
 
