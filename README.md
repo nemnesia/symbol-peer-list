@@ -1,6 +1,6 @@
 # symbol-peers-list
 
-SymbolブロックチェーンのピアリストWeb API
+Symbolブロックチェーンノードの初期接続先Peerリストを返すWeb API
 
 ## 概要
 

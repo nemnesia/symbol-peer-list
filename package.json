@@ -1,6 +1,6 @@
 {
-  "name": "symbol-peers-list",
-  "description": "Symbolブロックチェーンのmainnet/testnetピアリストWeb API",
+  "name": "symbol-peers-p2p",
+  "description": "Symbolブロックチェーンノードの初期接続先Peerリストを返すWeb API",
   "version": "1.0.0",
   "author": "nemnesia",
   "license": "Apache-2.0",
