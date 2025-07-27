@@ -35,6 +35,9 @@ export function toSymbolPeerList(raw: any): SymbolPeerList {
     })) : []
   return {
     _info: 'this file contains a list of peers',
+    _create_tool: 'symbol-peers-p2p',
+    _url: 'https://peers-p2p.harvestasya.com',
+    _author: 'ccHarvestasya',
     knownPeers,
   }
 }
