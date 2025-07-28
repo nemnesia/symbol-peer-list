@@ -1,8 +1,5 @@
-export interface SymbolPeerList {
+export interface SymbolPeersList {
   _info: string
-  _create_tool: string
-  _url: string
-  _author: string
   knownPeers: SymbolPeer[]
 }
 

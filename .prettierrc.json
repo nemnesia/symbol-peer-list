@@ -3,5 +3,8 @@
   "printWidth": 80,
   "trailingComma": "all",
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "plugins": [
+    "prettier-plugin-organize-imports"
+  ]
 }
