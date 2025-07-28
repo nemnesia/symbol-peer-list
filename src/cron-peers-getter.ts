@@ -54,11 +54,13 @@ async function getNodeInfo(
   }
 }
 
-async function processNodes(restGatewayUrls: string[]): Promise<Peer[]> {
+async function processNodes(
+  restGatewayUrls: string[],
+): Promise<(Peer & { latestFinalizedBlockHeight?: number })[]> {
   logWithTime(
     `Processing ${restGatewayUrls.length} nodes (concurrency: ${CONCURRENCY})`,
   )
-  const peers: Peer[] = []
+  const peers: (Peer & { latestFinalizedBlockHeight?: number })[] = []
   let index = 0
   while (index < restGatewayUrls.length) {
     const batch = restGatewayUrls.slice(index, index + CONCURRENCY)
@@ -77,6 +79,9 @@ async function processNodes(restGatewayUrls: string[]): Promise<Peer[]> {
           responseTime,
           publicKey: node.publicKey,
           port: node.port,
+          latestFinalizedBlockHeight: Number(
+            chain.latestFinalizedBlock?.height ?? 0,
+          ),
         })
       } else {
         logWithTime(`Failed to get node info: ${(result as any).reason}`)
@@ -88,13 +93,24 @@ async function processNodes(restGatewayUrls: string[]): Promise<Peer[]> {
   return peers
 }
 
-function filterPeers(peers: Peer[]): Peer[] {
+function filterPeers(
+  peers: (Peer & { latestFinalizedBlockHeight?: number })[],
+): Peer[] {
   if (peers.length === 0) return []
   const maxHeight = Math.max(...peers.map((p) => p.height))
+  const maxFinalizedHeight = Math.max(
+    ...peers.map((p) => p.latestFinalizedBlockHeight ?? 0),
+  )
   return peers
-    .filter(
-      (p) => hasPeerAndApiRole(p.roles) && Math.abs(maxHeight - p.height) <= 20,
-    )
+    .filter((p) => {
+      // Peer+Apiロール
+      if (!hasPeerAndApiRole(p.roles)) return false
+      // height, latestFinalizedBlock.height がそれぞれ最大値から20以内
+      const heightOk = Math.abs(maxHeight - p.height) <= 20
+      const finalizedOk =
+        Math.abs(maxFinalizedHeight - (p.latestFinalizedBlockHeight ?? 0)) <= 20
+      return heightOk && finalizedOk
+    })
     .sort((a, b) => a.responseTime - b.responseTime)
 }
 
