@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 const app = express()
-const PORT = process.env.SYMBOL_PEERS_LIST_PORT || process.env.PORT || 3000
+const PORT = process.env.SYMBOL_PEERS_P2P_PORT || process.env.PORT || 3000
 
 const NETWORKS = ['mainnet', 'testnet']
 
@@ -48,7 +48,7 @@ app.get('/peers-p2p/:network', (req, res) => {
   })
 })
 
-app.get('/active-api/:network', (req, res) => {
+app.get('/peers-p2p/active-api/:network', (req, res) => {
   try {
     const { network } = req.params
     const limit = parseInt(req.query.limit as string) || 10
@@ -100,6 +100,11 @@ app.get('/active-api/:network', (req, res) => {
       .status(500)
       .json({ code: 'INTERNAL_ERROR', message: 'Unexpected server error' })
   }
+})
+
+// 存在しないパスは404エラーを返す
+app.use((req, res) => {
+  res.status(404).json({ code: 'NOT_FOUND', message: 'Not Found' })
 })
 
 app.listen(PORT, () => {

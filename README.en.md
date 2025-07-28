@@ -1,13 +1,14 @@
-# symbol-peers-list
 
-A Web API that returns an initial peer list for Symbol blockchain nodes.
+# symbol-peer-p2p
+
+Web API that returns the initial peer list for Symbol blockchain nodes (Symbol Peer P2P)
 
 ## Overview
 
-- Provides node lists for mainnet/testnet as JSON via a Web API.
+- Provides node lists for mainnet/testnet as JSON via Web API.
 - Built with Express + TypeScript.
-- Endpoints `/mainnet` and `/testnet` return peer information.
-- The `limit` query parameter allows you to specify the number of peers to retrieve.
+- Get peer info via `/peers-p2p/mainnet` and `/peers-p2p/testnet` endpoints.
+- You can specify the number of results with the `limit` query parameter.
 
 ## Usage
 
@@ -33,10 +34,12 @@ yarn start
 
 * You can manage environment variables such as the port number using a `.env` file.
 
+
 ### Endpoints
 
-- `GET /mainnet?limit=10` : Get mainnet node list
-- `GET /testnet?limit=10` : Get testnet node list
+- `GET /peers-p2p/mainnet?limit=10` : Get mainnet node list
+- `GET /peers-p2p/testnet?limit=10` : Get testnet node list
+
 
 #### Example Response
 ```json
@@ -44,13 +47,21 @@ yarn start
   "_info": "this file contains a list of peers",
   "knownPeers": [
     {
-      "publicKey": "...",
-      "endpoint": { "host": "...", "port": 7900 },
-      "metadata": { "name": "...", "roles": "Peer, Api" }
+      "publicKey": "...", // Node public key (string)
+      "endpoint": { "host": "...", "port": 7900 }, // Host and port
+      "metadata": { "name": "...", "roles": "Peer, Api" } // Node name and roles
     }
   ]
 }
 ```
+
+Field details:
+- `publicKey`: Node public key (Base64-encoded string)
+- `endpoint.host`: Node hostname or IP address
+- `endpoint.port`: Port number (usually 7900)
+- `metadata.name`: Node name
+- `metadata.roles`: Node roles (e.g., Peer, Api, Voter, etc.)
+
 
 ### Lint/Format
 
@@ -58,15 +69,28 @@ yarn start
 - `yarn format` / `yarn format:fix`
 
 
+
 ## Environment Variables
 
-- You can configure environment variables in a `.env` file (see `.env.sample`).
-- `SYMBOL_PEERS_LIST_PORT` : Server port (default: 3000)
+- Can be set in a `.env` file (see `.env.sample` for example).
+- `SYMBOL_PEER_P2P_PORT` : Server port (default: 3000)
 
-Example `.env`:
+Example: `.env`
 ```env
-SYMBOL_PEERS_LIST_PORT=8080
+SYMBOL_PEER_P2P_PORT=8080
 ```
+
+## Requirements & Dependencies
+
+- Node.js v22 or later recommended
+- yarn v4 or later
+
+See `package.json` for details of dependencies.
+
+---
+
+*Please also refer to the Japanese README (`README.md`). Make sure the contents are consistent between languages.*
+
 
 ## License
 
